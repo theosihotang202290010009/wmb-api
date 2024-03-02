@@ -20,4 +20,7 @@ public class Customer {
     private String phone;
     @Column(name = "is_member")
     private Boolean member;
+    @OneToOne
+    @JoinColumn(name = "user_credential_id",unique = true)
+    private UserCredential userCredential;
 }

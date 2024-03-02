@@ -7,4 +7,6 @@ public class TableConstant {
     public static final String TABLE_TRANS_TYPE = "m_trans_type";
     public static final String TABLE_BILL = "m_bill";
     public static final String TABLE_BILL_DETAIL = "m_bill_detail";
+    public static final String TABLE_ROLE = "m_role";
+    public static final String TABLE_USER_CREDENTIAL = "m_user_credential";
 }

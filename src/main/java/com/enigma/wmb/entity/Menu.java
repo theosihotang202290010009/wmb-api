@@ -17,5 +17,5 @@ public class Menu {
     @Column(name = "menu_name", nullable = false)
     private String name;
     @Column(name = "price", nullable = false)
-    private Float price;
+    private Long price;
 }
