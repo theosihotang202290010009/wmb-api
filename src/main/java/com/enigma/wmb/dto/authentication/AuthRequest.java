@@ -1,4 +1,4 @@
-package com.enigma.wmb.dto.request;
+package com.enigma.wmb.dto.authentication;
 
 import lombok.*;
 

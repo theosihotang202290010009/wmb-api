@@ -4,7 +4,6 @@ import com.enigma.wmb.dto.request.customer.SearchCustomerRequest;
 import com.enigma.wmb.dto.request.customer.UpdateCustomerRequest;
 import com.enigma.wmb.dto.response.CustomerResponse;
 import com.enigma.wmb.entity.Customer;
-import com.enigma.wmb.entity.UserCredential;
 import com.enigma.wmb.repository.CustomerRepository;
 import com.enigma.wmb.service.CustomerService;
 import com.enigma.wmb.specification.CustomerSpecification;

@@ -1,6 +1,6 @@
 package com.enigma.wmb.specification;
 
-import com.enigma.wmb.dto.request.Menu.SearchMenuRequest;
+import com.enigma.wmb.dto.request.menu.SearchMenuRequest;
 import com.enigma.wmb.entity.Menu;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;

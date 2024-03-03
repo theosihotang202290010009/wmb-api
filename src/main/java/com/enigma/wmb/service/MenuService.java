@@ -1,10 +1,9 @@
 package com.enigma.wmb.service;
 
-import com.enigma.wmb.dto.request.Menu.NewMenuRequest;
-import com.enigma.wmb.dto.request.Menu.SearchMenuRequest;
-import com.enigma.wmb.dto.request.Menu.UpdateMenuRequest;
+import com.enigma.wmb.dto.request.menu.NewMenuRequest;
+import com.enigma.wmb.dto.request.menu.SearchMenuRequest;
+import com.enigma.wmb.dto.request.menu.UpdateMenuRequest;
 import com.enigma.wmb.dto.response.MenuResponse;
-import com.enigma.wmb.entity.Menu;
 import org.springframework.data.domain.Page;
 
 public interface MenuService {

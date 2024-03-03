@@ -3,6 +3,8 @@ package com.enigma.wmb.controller;
 import com.enigma.wmb.dto.response.CommonResponse;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,7 +23,37 @@ public class ErrorController {
                 .body(response);
     }
 
+    @ExceptionHandler({ConstraintViolationException.class})
     public ResponseEntity<CommonResponse<?>> constraintViolationException(ConstraintViolationException e){
+        CommonResponse<Object> response = CommonResponse.builder()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message(e.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(response);
+    }
+    @ExceptionHandler({InvalidDataAccessApiUsageException.class})
+    public ResponseEntity<CommonResponse<?>> invalidDataAccess(InvalidDataAccessApiUsageException e){
+        CommonResponse<Object> response = CommonResponse.builder()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message(e.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(response);
+    }
+
+    @ExceptionHandler({PropertyReferenceException.class})
+    public ResponseEntity<CommonResponse<?>> propertyReferenceException(PropertyReferenceException e){
+        CommonResponse<Object> response = CommonResponse.builder()
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .message(e.getMessage())
+                .build();
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(response);
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class})
+    public ResponseEntity<CommonResponse<?>> illegalArgument(IllegalArgumentException e){
         CommonResponse<Object> response = CommonResponse.builder()
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .message(e.getMessage())

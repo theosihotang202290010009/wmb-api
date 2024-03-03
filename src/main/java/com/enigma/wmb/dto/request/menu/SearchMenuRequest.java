@@ -1,4 +1,4 @@
-package com.enigma.wmb.dto.request.Menu;
+package com.enigma.wmb.dto.request.menu;
 
 import lombok.*;
 

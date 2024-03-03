@@ -1,9 +1,9 @@
 package com.enigma.wmb.service.impl;
 
 import com.enigma.wmb.ValidatorUtil;
-import com.enigma.wmb.dto.request.Menu.NewMenuRequest;
-import com.enigma.wmb.dto.request.Menu.SearchMenuRequest;
-import com.enigma.wmb.dto.request.Menu.UpdateMenuRequest;
+import com.enigma.wmb.dto.request.menu.NewMenuRequest;
+import com.enigma.wmb.dto.request.menu.SearchMenuRequest;
+import com.enigma.wmb.dto.request.menu.UpdateMenuRequest;
 import com.enigma.wmb.dto.response.MenuResponse;
 import com.enigma.wmb.entity.Menu;
 import com.enigma.wmb.repository.MenuRepository;

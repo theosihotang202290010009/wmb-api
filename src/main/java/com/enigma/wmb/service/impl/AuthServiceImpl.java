@@ -1,7 +1,7 @@
 package com.enigma.wmb.service.impl;
 
 import com.enigma.wmb.constant.UserRole;
-import com.enigma.wmb.dto.request.AuthRequest;
+import com.enigma.wmb.dto.authentication.AuthRequest;
 import com.enigma.wmb.dto.response.LoginResponse;
 import com.enigma.wmb.dto.response.RegisterResponse;
 import com.enigma.wmb.entity.Customer;
@@ -19,7 +19,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
