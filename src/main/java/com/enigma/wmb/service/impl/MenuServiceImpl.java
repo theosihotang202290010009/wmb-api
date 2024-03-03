@@ -4,6 +4,7 @@ import com.enigma.wmb.ValidatorUtil;
 import com.enigma.wmb.dto.request.Menu.NewMenuRequest;
 import com.enigma.wmb.dto.request.Menu.SearchMenuRequest;
 import com.enigma.wmb.dto.request.Menu.UpdateMenuRequest;
+import com.enigma.wmb.dto.response.MenuResponse;
 import com.enigma.wmb.entity.Menu;
 import com.enigma.wmb.repository.MenuRepository;
 import com.enigma.wmb.service.MenuService;
@@ -12,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -24,37 +26,74 @@ public class MenuServiceImpl implements MenuService {
     private final ValidatorUtil validatorUtil;
 
     @Override
-    public Menu createMenu(NewMenuRequest request) {
+    public MenuResponse createMenu(NewMenuRequest request) {
         validatorUtil.validate(request);
         Menu menu = Menu.builder()
                 .name(request.getName())
                 .price(request.getPrice())
                 .build();
-        return menuRepository.saveAndFlush(menu);
+        Menu menuSave = menuRepository.saveAndFlush(menu);
+        return MenuResponse.builder()
+                .id(menuSave.getId())
+                .name(menuSave.getName())
+                .price(menuSave.getPrice())
+                .build();
     }
 
     @Override
-    public Page<Menu> getAll(SearchMenuRequest request) {
+    public Page<MenuResponse> getAll(SearchMenuRequest request) {
         if (request.getPage() <= 0) request.setPage(1);
         Specification<Menu> specification = MenuSpecification.getSpecification(request);
-        Pageable pageable = PageRequest.of((request.getPage() - 1), request.getSize());
-        return menuRepository.findAll(specification,pageable);
+        Sort sort = Sort.by(Sort.Direction.fromString(request.getDirection()), request.getSortBy());
+        Pageable pageable = PageRequest.of((request.getPage() - 1), request.getSize(),sort);
+        Page<Menu> getAll = menuRepository.findAll(specification, pageable);
+        return getAll.map(menu -> MenuResponse.builder()
+                .id(menu.getId())
+                .name(menu.getName())
+                .price(menu.getPrice())
+                .build());
+
     }
 
     @Override
-    public Menu updateMenu(UpdateMenuRequest request) {
-        Menu menuUpdate = findByIdMenu(request.getId());
-        return menuRepository.saveAndFlush(menuUpdate);
+    public MenuResponse updateMenu(UpdateMenuRequest request) {
+        MenuResponse menuResponse = findByIdMenu(request.getId());
+
+        menuResponse.setName(request.getName());
+        menuResponse.setPrice(request.getPrice());
+        Menu menuToUpdate = Menu.builder()
+                .id(menuResponse.getId())
+                .name(menuResponse.getName())
+                .price(menuResponse.getPrice())
+                .build();
+
+        Menu updatedMenu = menuRepository.saveAndFlush(menuToUpdate);
+
+        return MenuResponse.builder()
+                .id(updatedMenu.getId())
+                .name(updatedMenu.getName())
+                .price(updatedMenu.getPrice())
+                .build();
     }
 
     @Override
-    public Menu findByIdMenu(String id) {
-        return menuRepository.findById(id).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, "Can't found ID "+ id));
+    public MenuResponse findByIdMenu(String id) {
+        Menu menu = menuRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Can't found ID " + id));
+        return MenuResponse.builder()
+                .id(menu.getId())
+                .name(menu.getName())
+                .price(menu.getPrice())
+                .build();
     }
 
     @Override
     public void delete(String id) {
-        Menu menuDelete = findByIdMenu(id);
-        menuRepository.delete(menuDelete);
+        MenuResponse menuResponse = findByIdMenu(id);
+        Menu menu = Menu.builder()
+                .id(menuResponse.getId())
+                .name(menuResponse.getName())
+                .price(menuResponse.getPrice())
+                .build();
+        menuRepository.delete(menu);
     }
 }

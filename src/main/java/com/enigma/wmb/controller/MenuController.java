@@ -5,6 +5,7 @@ import com.enigma.wmb.dto.request.Menu.NewMenuRequest;
 import com.enigma.wmb.dto.request.Menu.SearchMenuRequest;
 import com.enigma.wmb.dto.request.Menu.UpdateMenuRequest;
 import com.enigma.wmb.dto.response.CommonResponse;
+import com.enigma.wmb.dto.response.MenuResponse;
 import com.enigma.wmb.dto.response.PagingResponse;
 import com.enigma.wmb.entity.Menu;
 import com.enigma.wmb.service.MenuService;
@@ -27,9 +28,9 @@ public class MenuController {
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<CommonResponse<Menu>> createMenu(@RequestBody NewMenuRequest request) {
-        Menu menu = menuService.createMenu(request);
-        CommonResponse<Menu> response = CommonResponse.<Menu>builder()
+    public ResponseEntity<CommonResponse<MenuResponse>> createMenu(@RequestBody NewMenuRequest request) {
+        MenuResponse menu = menuService.createMenu(request);
+        CommonResponse<MenuResponse> response = CommonResponse.<MenuResponse>builder()
                 .statusCode(HttpStatus.CREATED.value())
                 .message("Successfully created new menu")
                 .data(menu)
@@ -41,7 +42,7 @@ public class MenuController {
     @GetMapping(
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<CommonResponse<List<Menu>>> getAll(
+    public ResponseEntity<CommonResponse<List<MenuResponse>>> getAll(
             @RequestParam(name = "name", required = false) String name,
             @RequestParam(name = "price", required = false) Long price,
             @RequestParam(name = "page", defaultValue = "1") Integer page,
@@ -57,7 +58,7 @@ public class MenuController {
                 .direction(direction)
                 .size(size)
                 .build();
-        Page<Menu> allMenu = menuService.getAll(request);
+        Page<MenuResponse> allMenu = menuService.getAll(request);
         PagingResponse pagingResponse = PagingResponse.builder()
                 .totalPages(allMenu.getTotalPages())
                 .totalElement(allMenu.getTotalElements())
@@ -66,7 +67,7 @@ public class MenuController {
                 .hasNext(allMenu.hasNext())
                 .hasPrevious(allMenu.hasPrevious())
                 .build();
-        CommonResponse<List<Menu>> response = CommonResponse.<List<Menu>>builder()
+        CommonResponse<List<MenuResponse>> response = CommonResponse.<List<MenuResponse>>builder()
                 .statusCode(HttpStatus.OK.value())
                 .message("successfully get all data")
                 .paging(pagingResponse)
@@ -80,9 +81,9 @@ public class MenuController {
             path = "/{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<CommonResponse<Menu>> findById(@PathVariable String id) {
-        Menu menu = menuService.findByIdMenu(id);
-        CommonResponse<Menu> response = CommonResponse.<Menu>builder()
+    public ResponseEntity<CommonResponse<MenuResponse>> findById(@PathVariable String id) {
+        MenuResponse menu = menuService.findByIdMenu(id);
+        CommonResponse<MenuResponse> response = CommonResponse.<MenuResponse>builder()
                 .statusCode(HttpStatus.OK.value())
                 .message("Successfully find data with ID " + id)
                 .data(menu)
@@ -95,9 +96,9 @@ public class MenuController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<CommonResponse<Menu>> update(@RequestBody UpdateMenuRequest request) {
-        Menu menu = menuService.updateMenu(request);
-        CommonResponse<Menu> response = CommonResponse.<Menu>builder()
+    public ResponseEntity<CommonResponse<MenuResponse>> update(@RequestBody UpdateMenuRequest request) {
+        MenuResponse menu = menuService.updateMenu(request);
+        CommonResponse<MenuResponse> response = CommonResponse.<MenuResponse>builder()
                 .statusCode(HttpStatus.OK.value())
                 .message("Successfully update data with ID " + request.getId())
                 .data(menu)

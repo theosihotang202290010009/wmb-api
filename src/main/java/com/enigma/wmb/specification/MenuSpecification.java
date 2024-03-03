@@ -16,7 +16,7 @@ public class MenuSpecification {
                 predicates.add(
                         criteriaBuilder.like(
                                 criteriaBuilder.lower(
-                                        root.get("name")), request.getName()
+                                        root.get("name")), "%"+request.getName()+"%"
                         ));
             }
 

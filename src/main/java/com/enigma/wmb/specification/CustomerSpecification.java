@@ -1,6 +1,7 @@
 package com.enigma.wmb.specification;
 
-import com.enigma.wmb.dto.request.CustomerRequest;
+import com.enigma.wmb.dto.request.customer.NewCustomerRequest;
+import com.enigma.wmb.dto.request.customer.SearchCustomerRequest;
 import com.enigma.wmb.entity.Customer;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerSpecification {
-    public static Specification<Customer> getSpecification(CustomerRequest request){
+    public static Specification<Customer> getSpecification(SearchCustomerRequest request){
         return (root, query, criteriaBuilder) -> {
             List<Predicate> filterCustomer = new ArrayList<>();
             if (request.getName() != null){

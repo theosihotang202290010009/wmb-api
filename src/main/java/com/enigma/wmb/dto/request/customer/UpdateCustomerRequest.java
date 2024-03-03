@@ -1,4 +1,4 @@
-package com.enigma.wmb.dto.request;
+package com.enigma.wmb.dto.request.customer;
 
 import lombok.*;
 
@@ -7,8 +7,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class CustomerRequest {
+public class UpdateCustomerRequest {
+    private String id;
     private String name;
     private String phone;
     private Boolean member;
+    private String userCredentialId;
 }
