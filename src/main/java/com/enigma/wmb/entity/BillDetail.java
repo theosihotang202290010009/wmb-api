@@ -2,9 +2,15 @@ package com.enigma.wmb.entity;
 
 import com.enigma.wmb.constant.TableConstant;
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = TableConstant.TABLE_BILL_DETAIL)
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class BillDetail {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -15,7 +21,7 @@ public class BillDetail {
     @ManyToOne
     @JoinColumn(name = "menu_id")
     private Menu menuId;
-    private Float price;
+    private Long price;
     @Column(name = "qty")
     private Integer qty;
 }

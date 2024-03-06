@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class TablesResponse {
+    private String id;
     private String name;
     private Boolean isEmpty;
 }

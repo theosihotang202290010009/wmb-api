@@ -8,6 +8,10 @@ import com.enigma.wmb.entity.Tables;
 import com.enigma.wmb.repository.TablesRepository;
 import com.enigma.wmb.service.TablesService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,24 +30,29 @@ public class TablesServiceImpl implements TablesService {
                 .build();
         Tables save = tablesRepository.saveAndFlush(table);
         return TablesResponse.builder()
+                .id(save.getId())
                 .name(save.getName())
                 .isEmpty(save.getIsEmpty())
                 .build();
     }
 
     @Override
-    public List<TablesResponse> getAll(SearchTablesRequest request) {
-        List<Tables> all = tablesRepository.findAll();
-        return all.stream().map(tables -> TablesResponse.builder()
+    public Page<TablesResponse> getAll(SearchTablesRequest request) {
+        Sort sort = Sort.by(Sort.Direction.fromString(request.getDirection()), request.getSortBy());
+        Pageable pageable = PageRequest.of((request.getPage() - 1),request.getSize(), sort);
+        Page<Tables> all = tablesRepository.findAll(pageable);
+        return all.map(tables -> TablesResponse.builder()
+                .id(tables.getId())
                 .name(tables.getName())
                 .isEmpty(tables.getIsEmpty())
-                .build()).toList();
+                .build());
     }
 
     @Override
     public TablesResponse getById(String id) {
         Tables tables = tablesRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "can't find data with ID " + id));
         return TablesResponse.builder()
+                .id(tables.getId())
                 .name(tables.getName())
                 .isEmpty(tables.getIsEmpty())
                 .build();

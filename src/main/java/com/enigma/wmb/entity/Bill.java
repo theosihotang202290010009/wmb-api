@@ -19,19 +19,24 @@ public class Bill {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+
     @Column(name = "trans_date")
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "yyyy-MM-dd", timezone = "Asia/Jakarta")
     private Date transDate;
+
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customerId;
+
     @ManyToOne
     @JoinColumn(name = "table_id")
     private Tables tableId;
+
     @ManyToOne
     @JoinColumn(name = "trans_type")
     private TransType transTypeId;
+
     @OneToMany(mappedBy = "billId")
     private List<BillDetail> billDetails;
 }
